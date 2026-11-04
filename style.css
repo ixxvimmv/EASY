@@ -219,19 +219,43 @@ button:focus-visible,.btn-link:focus-visible{outline:3px solid #9db8e0;outline-o
     .hero{padding:24px 20px}
 }
 
-/* Print: result only */
+/* Print: one-page statement */
+@page{size:A4;margin:14mm}
+
 @media print{
-    body{background:#fff;padding:0}
-    .site-header{position:static}
-    .band{background:#fff;padding:16px 24px}
-    .band h1{color:var(--ink);font-size:28px;margin:0}
-    .band h1::after{margin-top:12px}
-    .band p,.rate-panel,#calcForm,.actions,.footer{display:none}
-    .page{margin:0}
+    html,body{height:auto}
+    body{background:#fff;padding:0;font-size:11pt;line-height:1.4;
+         -webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+    .site-header{position:static;border-bottom:1px solid var(--line)}
+    .header-inner{padding:0 0 10px}
+    .site-header img{height:34px}
+
+    .band{background:#fff;padding:14px 0 10px}
+    .band-inner{max-width:none}
+    .band h1{color:var(--ink);font-size:20pt;margin:0}
+    .band h1::after{margin-top:10px}
+    .band p{display:none}
+
+    .rate-panel,#calcForm,.actions,.disclaimer{display:none}
+
+    .page{margin:0;padding:0;max-width:none}
     .main-wrapper{display:block}
     .container{border:none;padding:0;box-shadow:none}
-    .result{border:none;margin:0;padding:0}
-    .print-only{display:block;color:var(--muted);font-size:14px;margin:0 0 12px}
-    .hero{background:#fff;color:var(--ink);border:2px solid var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    .hero-label,.hero-note{color:var(--muted)}
+
+    .result{margin:0;padding:0;border:none;break-inside:avoid;page-break-inside:avoid}
+    .print-only{display:block;color:var(--muted);font-size:10pt;margin:0 0 10px}
+
+    .hero{background:var(--ink);color:#fff;padding:14px 18px;gap:2px}
+    .hero-label,.hero-note{color:#dbe4f2;font-size:10pt}
+    .hero-figure{font-size:30pt}
+
+    .rows{margin-top:6px}
+    .row{padding:7px 2px;break-inside:avoid}
+    .row dt,.row dd{font-size:10.5pt}
+
+    .qualification{margin-top:12px;padding:10px 14px;font-size:11pt;break-inside:avoid}
+    .qualification small{font-size:9.5pt}
+
+    .footer{display:block;margin:14px 0 0;font-size:8.5pt;color:var(--muted);text-align:left}
 }
