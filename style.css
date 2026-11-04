@@ -30,13 +30,13 @@ body{
 
 /* Header */
 .site-header{
-    position:fixed;top:0;center:0;width:100%;
+    position:fixed;top:0;left:0;width:100%;
     background:#fff;border-bottom:1px solid var(--line);
     z-index:9999;
 }
 .header-inner{
     max-width:1100px;margin:auto;padding:12px 24px;
-    display:flex;align-items:center;
+    display:flex;align-items:center;justify-content:center;
 }
 .site-header img{height:38px;width:auto;display:block}
 
