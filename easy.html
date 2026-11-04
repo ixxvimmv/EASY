@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ESTIMATED AMORTIZATION SIMULATOR FOR YOU</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    margin:0;
+    padding:30px;
+}
+
+/* ==========================================
+   MAIN LAYOUT
+========================================== */
+
+.main-wrapper{
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:320px 1fr;
+    gap:25px;
+    align-items:start;
+}
+
+/* ==========================================
+   FIXED PERIOD RATES PANEL
+========================================== */
+
+.rate-panel{
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+    position:sticky;
+    top:20px;
+}
+
+/* ==========================================
+   DMCI LOGO
+========================================== */
+
+.dmci-logo{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.dmci-logo img{
+    width:300px;
+    max-width:100%;
+    height:auto;
+    display:inline-block;
+}
+
+/* ==========================================
+   RATE PANEL TITLE
+========================================== */
+
+.rate-panel h2{
+    color:#0b5ed7;
+    text-align:center;
+    font-size:22px;
+    margin-top:0;
+    margin-bottom:20px;
+}
+
+.rate-intro{
+    color:#555;
+    font-size:14px;
+    line-height:1.5;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.rate-card{
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:12px;
+    border-left:5px solid #0b5ed7;
+    background:#eef7ff;
+}
+
+.rate-card:last-child{
+    margin-bottom:0;
+}
+
+.rate-card .rate{
+    font-size:20px;
+    font-weight:bold;
+    color:#0b5ed7;
+    margin-bottom:5px;
+}
+
+.rate-card .period{
+    font-size:16px;
+    font-weight:bold;
+    color:#333;
+}
+
+.rate-card .description{
+    font-size:13px;
+    color:#666;
+    margin-top:5px;
+}
+
+/* ==========================================
+   CALCULATOR
+========================================== */
+
+.container{
+    background:#fff;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+h1{
+    text-align:center;
+    color:#0b5ed7;
+    font-size:28px;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    font-size:16px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    margin-top:5px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    margin-top:25px;
+    background:#0b5ed7;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:18px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#084298;
+}
+
+.reset-button{
+    background:#6c757d;
+}
+
+.reset-button:hover{
+    background:#565e64;
+}
+
+/* ==========================================
+   RESULTS
+========================================== */
+
+.result{
+    margin-top:25px;
+    background:#eef7ff;
+    border-radius:10px;
+    padding:20px;
+}
+
+.result h2{
+    color:#0b5ed7;
+}
+
+.result p{
+    font-size:18px;
+    margin:10px 0;
+}
+
+.total-payment,
+.loanable-amount{
+    font-size:18px !important;
+}
+
+.qualification{
+    margin-top:20px;
+    padding:15px;
+    border-radius:8px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.qualified{
+    background:#d1e7dd;
+    color:#0f5132;
+}
+
+.not-qualified{
+    background:#f8d7da;
+    color:#842029;
+}
+
+.footer{
+    margin-top:20px;
+    text-align:center;
+    color:#666;
+    font-size:13px;
+}
+
+/* ==========================================
+   MOBILE RESPONSIVE
+========================================== */
+
+@media(max-width:800px){
+
+    body{
+        padding:15px;
+    }
+
+    .main-wrapper{
+        grid-template-columns:1fr;
+    }
+
+    .rate-panel{
+        position:static;
+    }
+
+    h1{
+        font-size:24px;
+    }
+
+    .dmci-logo img{
+        width:160px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="main-wrapper">
+
+<!-- ==========================================
+     LEFT SIDE - DMCI LOGO + FIXED PERIOD RATES
+========================================== -->
+
+<div class="rate-panel">
+
+    <!-- DMCI LOGO -->
+    <div class="dmci-logo">
+        <img
+            src="dmci-logo.png"
+            alt="DMCI Homes Logo"
+        >
+    </div>
+
+    <h2>Fixed Period Rates</h2>
+
+    <div class="rate-intro">
+        Reference guide for the applicable fixed interest
+        period based on the selected rate.
+    </div>
+
+    <div class="rate-card">
+
+        <div class="rate">
+            6.00% – 6.49%
+        </div>
+
+        <div class="period">
+            Fixed for 1 Year
+        </div>
+
+        <div class="description">
+            Interest rate is fixed for the first 1 year.
+        </div>
+
+    </div>
+
+    <div class="rate-card">
+
+        <div class="rate">
+            6.50% – 6.99%
+        </div>
+
+        <div class="period">
+            Fixed for 3 Years
+        </div>
+
+        <div class="description">
+            Interest rate is fixed for the first 3 years.
+        </div>
+
+    </div>
+
+    <div class="rate-card">
+
+        <div class="rate">
+            7.00% – 8.00%
+        </div>
+
+        <div class="period">
+            Fixed for 5 Years
+        </div>
+
+        <div class="description">
+            Interest rate is fixed for the first 5 years.
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================================
+     CALCULATOR
+========================================== -->
+
+<div class="container">
+
+<h1>ESTIMATED AMORTIZATION SIMULATOR FOR YOU</h1>
+
+<label>Age</label>
+
+<input
+    type="number"
+    id="age"
+    placeholder="Enter Age"
+>
+
+
+<label>Total Contract Price (TCP)</label>
+
+<input
+    type="text"
+    id="tcp"
+    placeholder="Enter TCP"
+    inputmode="decimal"
+    oninput="formatNumber(this)"
+>
+
+
+<label>Down Payment (%)</label>
+
+<input
+    type="number"
+    id="dpPercent"
+    placeholder="Example: 20"
+    min="0"
+    max="100"
+    step="0.01"
+>
+
+
+<label>Advance Payment (₱)</label>
+
+<input
+    type="text"
+    id="advancePayment"
+    placeholder="Example: 100,000"
+    inputmode="decimal"
+    oninput="formatNumber(this)"
+>
+
+
+<label>Fixed Interest Rate (% per year)</label>
+
+<input
+    type="number"
+    id="interest"
+    placeholder="Example: 6.5"
+    step="0.01"
+>
+
+
+<label>Loan Term (Years)</label>
+
+<input
+    type="number"
+    id="years"
+    placeholder="Example: 20"
+    min="0.1"
+    step="0.1"
+>
+
+
+<button onclick="calculateLoan()">
+    Compute
+</button>
+
+
+<button
+    type="button"
+    class="reset-button"
+    onclick="resetCalculator()"
+>
+    Reset
+</button>
+
+
+<!-- ==========================================
+     RESULT
+========================================== -->
+
+<div
+    class="result"
+    id="result"
+    style="display:none;"
+>
+
+<h2>Estimated Result</h2>
+
+<p>
+<strong>Total Contract Price (TCP):</strong>
+₱ <span id="resultTCP"></span>
+</p>
+
+<p class="total-payment">
+<strong>Total Payments Made:</strong>
+₱ <span id="totalPayments"></span>
+</p>
+
+<p class="loanable-amount">
+<strong>Loanable Amount:</strong>
+₱ <span id="loanableAmount"></span>
+</p>
+
+<p>
+<strong>Estimated Monthly Amortization:</strong>
+₱ <span id="monthly"></span>
+</p>
+
+<p>
+<strong>Estimated Gross Monthly Income:</strong>
+₱ <span id="income"></span>
+</p>
+
+<p>
+<strong>Loan Term Maturity:</strong>
+<span id="maturityAge"></span> years old
+</p>
+
+
+<div
+    id="qualification"
+    class="qualification"
+></div>
+
+</div>
+
+
+<div class="footer">
+Maturity age is limited to 65 years old.
+Estimated values only.
+Actual loan approval and income requirements may vary.
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+// ==========================================
+// AUTOMATIC COMMA FORMATTING
+// ==========================================
+
+function formatNumber(input){
+
+    let value = input.value;
+
+    value = value.replace(/[^0-9.]/g,'');
+
+    let parts = value.split('.');
+
+    let wholeNumber = parts[0];
+    let decimal = parts[1];
+
+    if(wholeNumber){
+
+        wholeNumber =
+            Number(wholeNumber).toLocaleString('en-US');
+
+    }
+
+    if(decimal !== undefined){
+
+        input.value =
+            wholeNumber + '.' + decimal;
+
+    }else{
+
+        input.value =
+            wholeNumber;
+
+    }
+}
+
+
+// ==========================================
+// CALCULATE LOAN
+// ==========================================
+
+function calculateLoan(){
+
+    const MATURITY_AGE = 65;
+
+
+    // ==========================================
+    // GET INPUT VALUES
+    // ==========================================
+
+    let tcpValue =
+        document.getElementById("tcp").value
+        .replace(/,/g,'');
+
+
+    let advanceValue =
+        document.getElementById("advancePayment").value
+        .replace(/,/g,'');
+
+
+    let age =
+        parseFloat(
+            document.getElementById("age").value
+        );
+
+
+    let tcp =
+        parseFloat(tcpValue);
+
+
+    let dpPercent =
+        parseFloat(
+            document.getElementById("dpPercent").value
+        );
+
+
+    let advancePayment =
+        parseFloat(advanceValue);
+
+
+    let annualRate =
+        parseFloat(
+            document.getElementById("interest").value
+        );
+
+
+    let years =
+        parseFloat(
+            document.getElementById("years").value
+        );
+
+
+    // ==========================================
+    // VALIDATION
+    // ==========================================
+
+    if(
+        isNaN(age) ||
+        isNaN(tcp) ||
+        isNaN(dpPercent) ||
+        isNaN(advancePayment) ||
+        isNaN(annualRate) ||
+        isNaN(years)
+    ){
+
+        alert("Please complete all fields.");
+
+        return;
+    }
+
+
+    if(age <= 0){
+
+        alert("Please enter a valid age.");
+
+        return;
+    }
+
+
+    if(age >= MATURITY_AGE){
+
+        alert(
+            "Applicant's age must be below 65."
+        );
+
+        return;
+    }
+
+
+    if(tcp <= 0){
+
+        alert(
+            "Please enter a valid Total Contract Price."
+        );
+
+        return;
+    }
+
+
+    if(dpPercent < 0 || dpPercent > 100){
+
+        alert(
+            "Down Payment percentage must be between 0% and 100%."
+        );
+
+        return;
+    }
+
+
+    if(advancePayment < 0){
+
+        alert(
+            "Advance payment cannot be negative."
+        );
+
+        return;
+    }
+
+
+    if(annualRate < 0){
+
+        alert(
+            "Interest rate cannot be negative."
+        );
+
+        return;
+    }
+
+
+    if(years <= 0){
+
+        alert(
+            "Please enter a valid loan term."
+        );
+
+        return;
+    }
+
+
+    // ==========================================
+    // DOWN PAYMENT
+    // ==========================================
+
+    let dp =
+        tcp * (dpPercent / 100);
+
+
+    // ==========================================
+    // TOTAL PAYMENTS MADE
+    // ==========================================
+
+    let totalPaymentsMade =
+        dp + advancePayment;
+
+
+    // ==========================================
+    // LOAN BEFORE ADVANCE PAYMENT
+    // ==========================================
+
+    let loanBeforeAdvance =
+        tcp - dp;
+
+
+    // ==========================================
+    // VALIDATE ADVANCE PAYMENT
+    // ==========================================
+
+    if(advancePayment > loanBeforeAdvance){
+
+        alert(
+            "Advance payment cannot be greater than " +
+            "the remaining loan amount."
+        );
+
+        return;
+    }
+
+
+    // ==========================================
+    // LOANABLE AMOUNT
+    // ==========================================
+
+    let loan =
+        loanBeforeAdvance - advancePayment;
+
+
+    // ==========================================
+    // MATURITY AGE
+    // ==========================================
+
+    let maturityAge =
+        age + years;
+
+
+    let qualified =
+        maturityAge <= MATURITY_AGE;
+
+
+    // ==========================================
+    // AMORTIZATION
+    // ==========================================
+
+    let monthlyRate =
+        annualRate / 100 / 12;
+
+
+    let months =
+        years * 12;
+
+
+    let monthlyPayment;
+
+
+    if(loan === 0){
+
+        monthlyPayment = 0;
+
+    }
+
+    else if(monthlyRate === 0){
+
+        monthlyPayment =
+            loan / months;
+
+    }
+
+    else{
+
+        monthlyPayment =
+            (
+                loan *
+                monthlyRate *
+                Math.pow(
+                    1 + monthlyRate,
+                    months
+                )
+            )
+            /
+            (
+                Math.pow(
+                    1 + monthlyRate,
+                    months
+                ) - 1
+            );
+
+    }
+
+
+    // ==========================================
+    // REQUIRED GROSS MONTHLY INCOME
+    // ==========================================
+
+    let grossIncome =
+        monthlyPayment / 0.35;
+
+
+    // ==========================================
+    // CURRENCY FORMAT
+    // ==========================================
+
+    function formatCurrency(value){
+
+        return value.toLocaleString('en-US',{
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        });
+
+    }
+
+
+    // ==========================================
+    // DISPLAY RESULTS
+    // ==========================================
+
+    document.getElementById("resultTCP").innerHTML =
+        formatCurrency(tcp);
+
+
+    document.getElementById("totalPayments").innerHTML =
+        formatCurrency(totalPaymentsMade);
+
+
+    document.getElementById("loanableAmount").innerHTML =
+        formatCurrency(loan);
+
+
+    document.getElementById("monthly").innerHTML =
+        formatCurrency(monthlyPayment);
+
+
+    document.getElementById("income").innerHTML =
+        formatCurrency(grossIncome);
+
+
+    document.getElementById("maturityAge").innerHTML =
+        maturityAge;
+
+
+    // ==========================================
+    // QUALIFICATION
+    // ==========================================
+
+    let qualification =
+        document.getElementById("qualification");
+
+
+    if(qualified){
+
+        qualification.className =
+            "qualification qualified";
+
+        qualification.innerHTML =
+            "✓ QUALIFIED<br>" +
+            "<span style='font-size:15px;font-weight:normal;'>" +
+            "Loan maturity is at age " +
+            maturityAge +
+            ", within the maximum age of 65." +
+            "</span>";
+
+    }
+
+    else{
+
+        qualification.className =
+            "qualification not-qualified";
+
+        qualification.innerHTML =
+            "✕ NOT QUALIFIED<br>" +
+            "<span style='font-size:15px;font-weight:normal;'>" +
+            "Loan maturity is at age " +
+            maturityAge +
+            ", which exceeds the maximum age of 65." +
+            "</span>";
+
+    }
+
+
+    // ==========================================
+    // SHOW RESULT
+    // ==========================================
+
+    document.getElementById("result").style.display =
+        "block";
+
+}
+
+
+// ==========================================
+// RESET CALCULATOR
+// ==========================================
+
+function resetCalculator(){
+
+    document.getElementById("age").value = "";
+
+    document.getElementById("tcp").value = "";
+
+    document.getElementById("dpPercent").value = "";
+
+    document.getElementById("advancePayment").value = "";
+
+    document.getElementById("interest").value = "";
+
+    document.getElementById("years").value = "";
+
+
+    document.getElementById("result").style.display =
+        "none";
+
+}
+
+</script>
+
+</body>
+</html>
