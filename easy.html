@@ -16,7 +16,32 @@ body{
     font-family:Arial,Helvetica,sans-serif;
     background:#f4f7fb;
     margin:0;
-    padding:30px;
+    padding:110px 30px 30px 30px; /* Top padding added so content clears fixed logo */
+}
+
+/* ==========================================
+   FIXED TOP-CENTER LOGO (OPTION A)
+========================================== */
+
+.fixed-header-logo {
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    background: rgba(244, 247, 251, 0.95); /* Matches body bg with slight backdrop fill */
+    padding: 8px 24px;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fixed-header-logo img {
+    height: 45px;
+    width: auto;
+    display: block;
 }
 
 /* ==========================================
@@ -42,23 +67,7 @@ body{
     border-radius:12px;
     box-shadow:0 5px 15px rgba(0,0,0,.15);
     position:sticky;
-    top:20px;
-}
-
-/* ==========================================
-   DMCI LOGO
-========================================== */
-
-.dmci-logo{
-    text-align:center;
-    margin-bottom:50px;
-}
-
-.dmci-logo img{
-    width:300px;
-    max-width:100%;
-    height:auto;
-    display:inline-block;
+    top:110px; /* Offset to sit below fixed logo header */
 }
 
 /* ==========================================
@@ -227,7 +236,11 @@ button:hover{
 @media(max-width:800px){
 
     body{
-        padding:15px;
+        padding:90px 15px 15px 15px;
+    }
+
+    .fixed-header-logo img {
+        height: 35px;
     }
 
     .main-wrapper{
@@ -242,10 +255,6 @@ button:hover{
         font-size:24px;
     }
 
-    .dmci-logo img{
-        width:160px;
-    }
-
 }
 
 </style>
@@ -253,21 +262,20 @@ button:hover{
 
 <body>
 
+<!-- ==========================================
+     UPPER MIDDLE FIXED LOGO
+========================================== -->
+<div class="fixed-header-logo">
+    <img src="dmci-logo.png" alt="DMCI Homes Logo">
+</div>
+
 <div class="main-wrapper">
 
 <!-- ==========================================
-     LEFT SIDE - DMCI LOGO + FIXED PERIOD RATES
+     LEFT SIDE - FIXED PERIOD RATES
 ========================================== -->
 
 <div class="rate-panel">
-
-    <!-- DMCI LOGO -->
-    <div class="dmci-logo">
-        <img
-            src="dmci-logo.png"
-            alt="DMCI Homes Logo"
-        >
-    </div>
 
     <h2>Fixed Period Rates</h2>
 
