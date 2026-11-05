@@ -8,7 +8,6 @@
         MIN_RATE: 6,
         MAX_RATE: 8,
         INCOME_RATIO: 0.35,          // monthly amortization = 35% of gross income
-        CONTACT_URL: 'mailto:sales@example.com?subject=Amortization%20Inquiry' // replace with your agent link / phone / form
     };
 
     const FIELDS = ['age', 'tcp', 'dpPercent', 'advancePayment', 'interest', 'years'];
@@ -227,7 +226,6 @@
     $('calcForm').addEventListener('submit', calculate);
     $('resetBtn').addEventListener('click', reset);
     $('printBtn').addEventListener('click', () => window.print());
-    $('contactBtn').href = CONFIG.CONTACT_URL;
 
     ['tcp', 'advancePayment'].forEach((id) =>
         $(id).addEventListener('input', (e) => { formatNumberInput(e.target); updateDpHint(); })
