@@ -199,7 +199,7 @@ button:focus-visible,.btn-link:focus-visible{outline:3px solid #9db8e0;outline-o
 .qualified{background:var(--ok-bg);color:var(--ok)}
 .not-qualified{background:var(--danger-bg);color:var(--danger);border:1px solid #f2c4bf}
 
-.result-actions{grid-template-columns:1fr 1fr;margin-top:24px}
+.result-actions{grid-template-columns:1fr;margin-top:24px}
 
 .footer{margin:28px 0 0;text-align:center;color:#4a5a72;font-size:13px}
 
